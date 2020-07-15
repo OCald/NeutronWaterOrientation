@@ -1,0 +1,51 @@
+# NWO
+
+NWO (Neutron Water Orientation) is a program to fit water molecules into nuclear density maps obtained from neutron diffraction experiments on protein crystals. The full description of the program and tests can be found in "A. Eriksson, O. Caldararu, U. Ryde, E. Oksanen, Automated Orientation of Water Molecules in Neutron Structures of Proteins, 2020, Acta Cryst D, under review". Please cite this paper if you use our program.
+
+## Installation
+
+The Python program nwo.py has the following dependencies:
+
+
+Biopython 1.70 or newer
+
+Instructions for installation of Biopython can be found at https://biopython.org/wiki/Download
+
+Phenix 1.14 or newer
+
+Phenix is a crystallographic software which is free of charge for academic users. It can be downloaded from https://www.phenix-online.org/download/
+
+Numpy
+
+Numpy can be installed using pip
+
+```bash
+pip install numpy
+```
+
+## Usage
+
+NWO can be run from the command line as:
+
+```bash
+nwo.py -p <pdbfile> -o <outputpdbfile> -z <reflection file> -t <RSCC-threshold> -c <max-number-of-cycles> -r (refine at each step) OR -n (no refinement) OR -e (use maps calculated without water molecules)
+```
+
+NWO requires a PDB file with water molecules with deuterium atoms already placed. The initial placement of deuterium atoms can be generated with e.g. ReadySet, that is included in the Phenix package.
+The residue names of the water molecules must be "HOH".
+
+The reflection file should contain only neutron reflections with column labels of F-obs and SIGF-obs. Column labels can be renamed using Phenix reflection editor.
+
+The RSCC-threshold represents the RSCC value from which a water molecule is considered to be in a good orientation. We recommend using a value of 0.81.
+
+The maximum number of cycles represents how many orientations will be generated for each water molecule before the program stops. We recommend using 100 cycles.
+
+The program can be run in three modes:
+
+1) Performing refinement after each orientation cycle (-r or --refine)
+2) Not performing any refinement (-n or --norefine)
+3) Using a map calculated without water molecules for calculating RSCC (-e or --omit)
+
+We do not recommend using option 1) as it takes more time and produces similar results as options 2) and 3)
+
+
